@@ -1,0 +1,4 @@
+require:
+  - hello-world-command.php
+  - zoodle-commands.php
+  - test-commands.php
