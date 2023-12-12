@@ -4,7 +4,6 @@ namespace WP_CLI\Zoodle;
 
 use WP_CLI;
 use WP_CLI_Command;
-use ZipArchive;
 
 class ZoodleCommands extends WP_CLI_Command {
 
@@ -39,6 +38,18 @@ class ZoodleCommands extends WP_CLI_Command {
         WP_CLI::$type( "Hello, $name!" );
     }
 
+    /**
+     * Prints the zoodle version.
+     *
+     * ## EXAMPLES
+     *
+     *     wp zoodle version
+     *
+     * @when before_wp_load
+     */
+    public function version() {
+        WP_CLI\Utils\format_items('json', [['version' => '1.0.0']], ['version']);
+    }
 
     /**
      * Zips a plugin or theme.
