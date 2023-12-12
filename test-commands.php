@@ -1,6 +1,7 @@
 <?php
 
-WP_CLI::log( "Script running.." );
+#WP_CLI::log( "Script running.." );
+
 //$options = array(
 //            'return' => true,
 //        );
@@ -32,10 +33,10 @@ WP_CLI::log( "Script running.." );
 //    echo var_dump($zip);
 //}
 
-WP_CLI\Utils\format_items( 'json', [['name' => 'test.zip']], ['name'] );
+#WP_CLI\Utils\format_items( 'json', [['name' => 'test.zip']], ['name'] );
 
 //echo _zoodle_get_root_dir() . PHP_EOL;
 //$zipDir = WP_CLI\Utils\trailingslashit('/zoodle/');
 //echo $zipDir;
-echo PHP_EOL;
-WP_CLI::log( "Script finished." );
+#echo PHP_EOL;
+#WP_CLI::log( "Script finished." );
