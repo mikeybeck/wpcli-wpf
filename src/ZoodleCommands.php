@@ -7,6 +7,26 @@ use WP_CLI_Command;
 
 class ZoodleCommands extends WP_CLI_Command {
 
+    public function __construct() {
+        @set_exception_handler([$this, 'exception_handler']);
+//        throw new Exception('DOH!!');
+    }
+
+    public function exception_handler($exception) {
+        WP_CLI::error('ZoodleCommands::exception_handler()', $exception->getMessage());
+
+        $output = [
+            [
+                'exception' => true,
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'message' => $exception->getMessage(),
+            ]
+        ];
+
+        WP_CLI\Utils\format_items('json', $output, ['exception', 'file', 'line', 'message']);
+    }
+
     /**
      * Prints a greeting.
      *
@@ -31,7 +51,7 @@ class ZoodleCommands extends WP_CLI_Command {
      * @when after_wp_load
      */
     public function hello( $args, $assoc_args ) {
-        list( $name ) = $args;
+        [ $name ] = $args;
 
         // Print the message with type
         $type = $assoc_args['type'];
@@ -69,12 +89,12 @@ class ZoodleCommands extends WP_CLI_Command {
      * @when before_wp_load
      */
     public function zip( $args, $assoc_args ) {
-        list( $entityType, $entityName ) = $args;
+        [$entityType, $entityName] = $args;
 
         $options = [
             'return' => true,
         ];
-        $entityPath = WP_CLI::runcommand( "$entityType path $entityName", $options);
+        $entityPath = WP_CLI::runcommand("$entityType path $entityName", $options);
 
         $entityDir = WP_CLI\Utils\trailingslashit(dirname($entityPath));
         $zipFileDir = _zoodle_get_zoodle_dir();
@@ -91,7 +111,7 @@ class ZoodleCommands extends WP_CLI_Command {
             WP_CLI\Utils\format_items('json', $output, ['name', 'file']);
 //            echo PHP_EOL;
         } else {
-            WP_CLI::error( "Error zipping file" );
+            WP_CLI::error("Error zipping file");
         }
     }
 
