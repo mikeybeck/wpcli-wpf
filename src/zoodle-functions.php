@@ -1,5 +1,6 @@
 <?php
 
+// Broken.. needs fixing
 function _zoodle_zip($dirToZip, $zipFileName, $zipDir, $zipFile = null) {
     if ($zipFile === null) {
         $zipFile = new ZipArchive;
@@ -11,7 +12,7 @@ function _zoodle_zip($dirToZip, $zipFileName, $zipDir, $zipFile = null) {
 
     $dir = opendir($dirToZip);
     while ($file = readdir($dir)) {
-        if ($file == '.' || $file == '..') continue;
+        if ($file === '.' || $file === '..') continue;
         $path = $dirToZip . '/' . $file;
         if (is_dir($path)) {
             _zoodle_zip($path, $zipFileName, $zipDir, $zipFile);
