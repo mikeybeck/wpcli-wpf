@@ -1,25 +1,30 @@
 <?php
 
-function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
-    $zipFile = new ZipArchive;
-
-    if ($zipFile->open($zipDir . $zipFileName, ZipArchive::CREATE) === true) {
-
-        $dir = opendir($dirToZip);
-
-        while ($file = readdir($dir)) {
-            if (is_file($dirToZip . $file)) {
-                $zipFile->addFile($dirToZip . $file, $file);
-            }
+function _zoodle_zip($dirToZip, $zipFileName, $zipDir, $zipFile = null) {
+    if ($zipFile === null) {
+        $zipFile = new ZipArchive;
+        if ($zipFile->open($zipDir . $zipFileName, ZipArchive::CREATE) !== true) {
+            WP_CLI::error("Error");
+            return false;
         }
-
-        $zipFile->close();
-
-        return $zipFile;
     }
 
-    WP_CLI::error("Error");
-    return false;
+    $dir = opendir($dirToZip);
+    while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') continue;
+        $path = $dirToZip . '/' . $file;
+        if (is_dir($path)) {
+            _zoodle_zip($path, $zipFileName, $zipDir, $zipFile);
+        } else if (is_file($path)) {
+            $zipFile->addFile($path, str_replace($zipDir, '', $path));
+        }
+    }
+
+    if ($zipFile !== null) {
+        $zipFile->close();
+    }
+
+    return $zipFile;
 }
 
 function _zoodle_get_root_dir() {
@@ -34,6 +39,7 @@ function _zoodle_get_root_dir() {
 
         if ($count++ > 10) {
             WP_CLI::error("Could not find root directory");
+            WP_CLI::error("Checking path: $path");
             return false;
         }
     }
