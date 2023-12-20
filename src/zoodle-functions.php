@@ -65,3 +65,41 @@ function _zoodle_log($output)
     file_put_contents($logFile, $logMessage, FILE_APPEND);
 //    WP_CLI::log($logMessage);
 }
+
+function _zoodle_format_output($output, $format = 'json', $fields = []) {
+    $status = 'unknown';
+
+    if (is_string($output) && stripos($output, 'error') !== false) {
+        $status = 'error';
+    }
+
+    if (is_string($output) && stripos($output, 'success') !== false) {
+        $status = 'success';
+    }
+
+    WP_CLI\Utils\format_items('json', [['status' => $status, 'response' => $output]], ['status', 'response']);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

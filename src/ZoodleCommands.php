@@ -123,6 +123,25 @@ class ZoodleCommands extends WP_CLI_Command {
         }
     }
 
+    /**
+     * Attempts to execute a WP CLI command and format the output.
+     * Useful for commands which do not have a --format option.
+     *
+     * @param $args
+     * @return void
+     */
+    public function executeAndFormat($args) {
+//        WP_CLI::success("Test success");
+//        WP_CLI::error("Test error");
+//        $assoc_args = ['format' => 'json'];
+//        $response = (new \WP_CLI\Formatter($assoc_args))->transform_item_values_to_json([['name' => 'test', 'file' => 'test.zip']]);
+//        WP_CLI::success($response);
 
+        [$command] = $args;
+
+        $response = WP_CLI::runcommand($command, ['return' => true]);
+
+        _zoodle_format_output($response);
+    }
 
 }
