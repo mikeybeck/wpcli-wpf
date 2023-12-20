@@ -1,31 +1,34 @@
 <?php
 
-// Broken.. needs fixing
-function _zoodle_zip($dirToZip, $zipFileName, $zipDir, $zipFile = null) {
-    if ($zipFile === null) {
-        $zipFile = new ZipArchive;
-        if ($zipFile->open($zipDir . $zipFileName, ZipArchive::CREATE) !== true) {
-            WP_CLI::error("Error");
-            return false;
+function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
+    $rootPath = realpath($dirToZip);
+
+    $zip = new ZipArchive();
+    $zip->open($zipDir . $zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+    /** @var SplFileInfo[] $files */
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($rootPath),
+        RecursiveIteratorIterator::LEAVES_ONLY
+    );
+
+    foreach ($files as $file)
+    {
+        // Skip directories (they would be added automatically)
+        if (!$file->isDir())
+        {
+            // Get real and relative path for current file
+            $filePath = $file->getRealPath();
+            $relativePath = substr($filePath, strlen($rootPath) + 1);
+
+            // Add current file to archive
+            $zip->addFile($filePath, $relativePath);
         }
     }
 
-    $dir = opendir($dirToZip);
-    while ($file = readdir($dir)) {
-        if ($file === '.' || $file === '..') continue;
-        $path = $dirToZip . '/' . $file;
-        if (is_dir($path)) {
-            _zoodle_zip($path, $zipFileName, $zipDir, $zipFile);
-        } else if (is_file($path)) {
-            $zipFile->addFile($path, str_replace($zipDir, '', $path));
-        }
-    }
+    $zip->close();
 
-    if ($zipFile !== null) {
-        $zipFile->close();
-    }
-
-    return $zipFile;
+    return $zip;
 }
 
 function _zoodle_get_root_dir() {
