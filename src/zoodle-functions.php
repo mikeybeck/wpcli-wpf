@@ -54,3 +54,11 @@ function _zoodle_get_zoodle_dir() {
 
     return _zoodle_get_root_dir() . 'zoodle/';
 }
+
+function _zoodle_log($output)
+{
+    $logFile = _zoodle_get_zoodle_dir() . 'zoodle.log';
+    $logMessage = date('Y-m-d H:i:s') . ' ' . print_r($output, true) . PHP_EOL;
+    file_put_contents($logFile, $logMessage, FILE_APPEND);
+//    WP_CLI::log($logMessage);
+}

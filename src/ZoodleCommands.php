@@ -25,7 +25,7 @@ class ZoodleCommands extends WP_CLI_Command {
         ];
 
         WP_CLI\Utils\format_items('json', $output, ['exception', 'file', 'line', 'message']);
-        $this->log($output);
+        _zoodle_log($output);
     }
 
     /**
@@ -92,7 +92,7 @@ class ZoodleCommands extends WP_CLI_Command {
     public function zip( $args, $assoc_args ) {
         [$entityType, $entityName] = $args;
 
-        $this->log('ZIP1');
+        _zoodle_log('ZIP1');
 
         $options = [
             'return' => true,
@@ -100,17 +100,17 @@ class ZoodleCommands extends WP_CLI_Command {
         $entityPath = WP_CLI::runcommand("$entityType path $entityName", $options);
 
 
-        $this->log('ZIP2');
+        _zoodle_log('ZIP2');
         $entityDir = WP_CLI\Utils\trailingslashit(dirname($entityPath));
         $zipFileDir = _zoodle_get_zoodle_dir();
         $zipFileName = "$entityName.zip";
 
-        $this->log('ZIP3');
+        _zoodle_log('ZIP3');
         $zipFile = _zoodle_zip($entityDir, $zipFileName, $zipFileDir);
 
-        $this->log('ZIP4');
+        _zoodle_log('ZIP4');
         if ($zipFile) {
-            $this->log('ZIP5');
+            _zoodle_log('ZIP5');
 //            WP_CLI::success( "Zip created successfully." );
 //            WP_CLI::success( "Name of Zip File: $zipFileName" );
 //            WP_CLI::success( "$entityType, $entityName, $entityPath" );
@@ -123,11 +123,6 @@ class ZoodleCommands extends WP_CLI_Command {
         }
     }
 
-    private function log($output)
-    {
-        $logFile = _zoodle_get_zoodle_dir() . 'zoodle.log';
-        $logMessage = date('Y-m-d H:i:s') . ' ' . print_r($output, true) . PHP_EOL;
-        file_put_contents($logFile, $logMessage, FILE_APPEND);
-    }
+
 
 }
