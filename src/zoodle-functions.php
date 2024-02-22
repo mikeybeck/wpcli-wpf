@@ -32,7 +32,7 @@ function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
 }
 
 function _zoodle_get_root_dir() {
-    $path = __DIR__;
+    $path = getcwd(); // __DIR__ returns the directory of the cli package, not the current working directory
     $count = 0;
     while (true) {
         if (file_exists($path . "/wp-config.php")) {
@@ -68,23 +68,23 @@ function _zoodle_log($output)
 
 function _zoodle_format_output($output, $format = 'json', $fields = []) {
     $status = 'unknown';
-    _zoodle_log('Output: ' . print_r($output, true));
-    WP_CLI::log('Output: ' . print_r($output, true));
+//    _zoodle_log('Output: ' . print_r($output, true));
+//    WP_CLI::log('Output: ' . print_r($output, true));
 
     if (is_string($output) && stripos($output, 'error') !== false) {
         $status = 'error';
-        _zoodle_log($output);
-        WP_CLI::error($output);
+//        _zoodle_log($output);
+//        WP_CLI::error($output);
     }
 
     if (is_string($output) && stripos($output, 'success') !== false) {
         $status = 'success';
-        _zoodle_log($output);
-        WP_CLI::success($output);
+//        _zoodle_log($output);
+//        WP_CLI::success($output);
     }
 
-    _zoodle_log('Status: ' . $status);
-    WP_CLI::log('Status: ' . $status);
+//    _zoodle_log('Status: ' . $status);
+//    WP_CLI::log('Status: ' . $status);
 
     WP_CLI\Utils\format_items('json', [['status' => $status, 'response' => $output]], ['status', 'response']);
 }
