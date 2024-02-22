@@ -68,14 +68,19 @@ function _zoodle_log($output)
 
 function _zoodle_format_output($output, $format = 'json', $fields = []) {
     $status = 'unknown';
+    WP_CLI::log('Output: ' . print_r($output, true));
 
     if (is_string($output) && stripos($output, 'error') !== false) {
         $status = 'error';
+        WP_CLI::error($output);
     }
 
     if (is_string($output) && stripos($output, 'success') !== false) {
         $status = 'success';
+        WP_CLI::success($output);
     }
+
+    WP_CLI::log('Status: ' . $status);
 
     WP_CLI\Utils\format_items('json', [['status' => $status, 'response' => $output]], ['status', 'response']);
 }
