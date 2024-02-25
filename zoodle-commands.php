@@ -14,14 +14,14 @@ if ( file_exists( $wpcli_zoodle_autoloader ) ) {
 	require_once $wpcli_zoodle_autoloader;
 }
 
+require_once __DIR__ . '/src/zoodle-functions.php';
+
 // Create the zoodle directory
 if ( ! file_exists( _zoodle_get_zoodle_dir() ) ) {
     if (!mkdir($concurrentDirectory = _zoodle_get_zoodle_dir()) && !is_dir($concurrentDirectory)) {
         throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
     }
 }
-
-require_once __DIR__ . '/src/zoodle-functions.php';
 
 WP_CLI::add_command( 'zoodle', ZoodleCommands::class );
 
