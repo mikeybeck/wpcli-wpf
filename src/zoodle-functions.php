@@ -55,7 +55,7 @@ function _zoodle_get_zoodle_dir() {
         return false;
     }
 
-    return _zoodle_get_root_dir() . 'zoodle/';
+    return _zoodle_get_root_dir() . 'wp-content/zoodle/';
 }
 
 function _zoodle_log($output)
