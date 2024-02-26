@@ -139,7 +139,36 @@ class ZoodleCommands extends WP_CLI_Command {
 
         [$command] = $args;
 
-        $response = WP_CLI::runcommand($command, ['return' => true]);
+        try {
+            $response = WP_CLI::runcommand($command, [
+                'return' => true, // Note that this doesn't always work when there is an error.
+                'launch' => false,
+                'exit_error' => false,
+            ]);
+
+            if (trim($response) === '') {
+//                WP_CLI::error("No response from command: $command");
+
+                // Run again with return set to false to see if there is any output.
+                // Fudge the output a bit to make it like JSON, since I can't figure out any other way to
+                // get the output.
+                echo PHP_EOL;
+                echo '[{"status":"error","response":"No response from command: ' . $command . '","error": "';
+
+                WP_CLI::runcommand($command, [
+                    'return' => false,
+                    'launch' => false,
+                    'exit_error' => false,
+                ]);
+
+                echo '"}]';
+
+                return;
+            }
+
+        } catch (\Exception $e) {
+            WP_CLI::error($e->getMessage());
+        }
 
         _zoodle_format_output($response);
     }
