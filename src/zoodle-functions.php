@@ -31,8 +31,15 @@ function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
     return $zip;
 }
 
-function _zoodle_get_root_dir() {
-    $path = getcwd(); // __DIR__ returns the directory of the cli package, not the current working directory
+function _zoodle_get_root_dir(bool $useDir = false) {
+    if ($useDir) {
+        $path = __DIR__;
+    } else {
+        $path = getcwd(); // __DIR__ returns the directory of the cli package, not the current working directory
+    }
+
+//    WP_CLI::log("getcwd: $path");
+//    WP_CLI::log("DIR: " . __DIR__);
     $count = 0;
     while (true) {
         if (file_exists($path . "/wp-config.php")) {
@@ -41,10 +48,14 @@ function _zoodle_get_root_dir() {
 
         $path = dirname($path);
 
-        if ($count++ > 10) {
-            WP_CLI::error("Could not find root directory");
-            WP_CLI::error("Checking path: $path");
-            return false;
+        WP_CLI::log("Checking path: $path");
+        if ($count++ > 10 || $path === '/') {
+            WP_CLI::error("Could not find root directory using getcwd().  Will try using __DIR__.");
+            if ($useDir) {
+                return false;
+            }
+
+            return _zoodle_get_root_dir(true);
         }
     }
 }
