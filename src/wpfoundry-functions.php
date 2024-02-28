@@ -1,6 +1,6 @@
 <?php
 
-function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
+function _wpfoundry_zip($dirToZip, $zipFileName, $zipDir) {
     $rootPath = realpath($dirToZip);
 
     $zip = new ZipArchive();
@@ -31,7 +31,7 @@ function _zoodle_zip($dirToZip, $zipFileName, $zipDir) {
     return $zip;
 }
 
-function _zoodle_get_root_dir(bool $useDir = false) {
+function _wpfoundry_get_root_dir(bool $useDir = false) {
     if ($useDir) {
         $path = __DIR__;
     } else {
@@ -55,46 +55,46 @@ function _zoodle_get_root_dir(bool $useDir = false) {
                 return false;
             }
 
-            return _zoodle_get_root_dir(true);
+            return _wpfoundry_get_root_dir(true);
         }
     }
 }
 
-function _zoodle_get_zoodle_dir() {
-    $dir = _zoodle_get_root_dir();
+function _wpfoundry_get_wpfoundry_dir() {
+    $dir = _wpfoundry_get_root_dir();
     if (!$dir) {
         return false;
     }
 
-    return _zoodle_get_root_dir() . 'wp-content/zoodle/';
+    return _wpfoundry_get_root_dir() . 'wp-content/wpfoundry/';
 }
 
-function _zoodle_log($output)
+function _wpfoundry_log($output)
 {
-    $logFile = _zoodle_get_zoodle_dir() . 'zoodle.log';
+    $logFile = _wpfoundry_get_wpfoundry_dir() . 'wpfoundry.log';
     $logMessage = date('Y-m-d H:i:s') . ' ' . print_r($output, true) . PHP_EOL;
     file_put_contents($logFile, $logMessage, FILE_APPEND);
 //    WP_CLI::log($logMessage);
 }
 
-function _zoodle_format_output($output, $format = 'json', $fields = []) {
+function _wpfoundry_format_output($output, $format = 'json', $fields = []) {
     $status = 'unknown';
-//    _zoodle_log('Output: ' . print_r($output, true));
+//    _wpfoundry_log('Output: ' . print_r($output, true));
 //    WP_CLI::log('Output: ' . print_r($output, true));
 
     if (is_string($output) && stripos($output, 'error') !== false) {
         $status = 'error';
-//        _zoodle_log($output);
+//        _wpfoundry_log($output);
 //        WP_CLI::error($output);
     }
 
     if (is_string($output) && stripos($output, 'success') !== false) {
         $status = 'success';
-//        _zoodle_log($output);
+//        _wpfoundry_log($output);
 //        WP_CLI::success($output);
     }
 
-//    _zoodle_log('Status: ' . $status);
+//    _wpfoundry_log('Status: ' . $status);
 //    WP_CLI::log('Status: ' . $status);
 
     WP_CLI\Utils\format_items('json', [['status' => $status, 'response' => $output]], ['status', 'response']);

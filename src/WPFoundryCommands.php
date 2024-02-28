@@ -1,11 +1,11 @@
 <?php
 
-namespace WP_CLI\Zoodle;
+namespace WP_CLI\wpfoundry;
 
 use WP_CLI;
 use WP_CLI_Command;
 
-class ZoodleCommands extends WP_CLI_Command {
+class WPFoundryCommands extends WP_CLI_Command {
 
     public function __construct() {
         @set_exception_handler([$this, 'exception_handler']);
@@ -13,7 +13,7 @@ class ZoodleCommands extends WP_CLI_Command {
     }
 
     public function exception_handler($exception) {
-        WP_CLI::error('ZoodleCommands::exception_handler(): ' . $exception->getMessage(), false);
+        WP_CLI::error('WPFoundryCommands::exception_handler(): ' . $exception->getMessage(), false);
 
         $output = [
             [
@@ -25,7 +25,7 @@ class ZoodleCommands extends WP_CLI_Command {
         ];
 
         WP_CLI\Utils\format_items('json', $output, ['exception', 'file', 'line', 'message']);
-        _zoodle_log($output);
+        _wpfoundry_log($output);
     }
 
     /**
@@ -60,11 +60,11 @@ class ZoodleCommands extends WP_CLI_Command {
     }
 
     /**
-     * Prints the zoodle version.
+     * Prints the wpfoundry version.
      *
      * ## EXAMPLES
      *
-     *     wp zoodle version
+     *     wp wpfoundry version
      *
      * @when before_wp_load
      */
@@ -85,14 +85,14 @@ class ZoodleCommands extends WP_CLI_Command {
      *
      * ## EXAMPLES
      *
-     *     wp zoodle zip plugin akismet
+     *     wp wpfoundry zip plugin akismet
      *
      * @when before_wp_load
      */
     public function zip( $args, $assoc_args ) {
         [$entityType, $entityName] = $args;
 
-        _zoodle_log('ZIP1');
+        _wpfoundry_log('ZIP1');
 
         $options = [
             'return' => true,
@@ -100,17 +100,17 @@ class ZoodleCommands extends WP_CLI_Command {
         $entityPath = WP_CLI::runcommand("$entityType path $entityName", $options);
 
 
-        _zoodle_log('ZIP2');
+        _wpfoundry_log('ZIP2');
         $entityDir = WP_CLI\Utils\trailingslashit(dirname($entityPath));
-        $zipFileDir = _zoodle_get_zoodle_dir();
+        $zipFileDir = _wpfoundry_get_wpfoundry_dir();
         $zipFileName = "$entityName.zip";
 
-        _zoodle_log('ZIP3');
-        $zipFile = _zoodle_zip($entityDir, $zipFileName, $zipFileDir);
+        _wpfoundry_log('ZIP3');
+        $zipFile = _wpfoundry_zip($entityDir, $zipFileName, $zipFileDir);
 
-        _zoodle_log('ZIP4');
+        _wpfoundry_log('ZIP4');
         if ($zipFile) {
-            _zoodle_log('ZIP5');
+            _wpfoundry_log('ZIP5');
 //            WP_CLI::success( "Zip created successfully." );
 //            WP_CLI::success( "Name of Zip File: $zipFileName" );
 //            WP_CLI::success( "$entityType, $entityName, $entityPath" );
@@ -170,7 +170,7 @@ class ZoodleCommands extends WP_CLI_Command {
             WP_CLI::error($e->getMessage());
         }
 
-        _zoodle_format_output($response);
+        _wpfoundry_format_output($response);
     }
 
 }

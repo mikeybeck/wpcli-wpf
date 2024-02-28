@@ -1,8 +1,8 @@
 {
-    "name": "mikeybeck/zoodle",
+    "name": "mikeybeck/wpcli-wpfoundry",
     "type": "wp-cli-package",
     "description": "",
-    "homepage": "https://github.com/mikeybeck/zoodle",
+    "homepage": "https://github.com/mikeybeck/wpcli-wpfoundry",
     "license": "MIT",
     "authors": [],
     "require": {
@@ -25,19 +25,14 @@
         },
         "bundled": false,
         "commands": [
-            "hello-world",
-            "hello-zoodle"
         ]
     },
     "autoload": {
         "psr-4": {
-            "WP_CLI\\Zoodle\\": "src/",
-            "WP_CLI\\HelloWorld\\": "src/"
+            "WP_CLI\\wpfoundry\\": "src/"
         },
         "files": [
-            "hello-world-command.php",
-            "zoodle-commands.php",
-            "test-commands.php"
+            "wpcli-wpfoundry-commands.php"
         ]
     },
     "minimum-stability": "dev",
@@ -57,6 +52,6 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/mikeybeck/zoodle/issues"
+        "issues": "https://github.com/mikeybeck/wpcli-wpfoundry/issues"
     }
 }

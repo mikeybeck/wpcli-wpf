@@ -1,9 +1,9 @@
-mikeybeck/wpcli-wpf
+mikeybeck/wpcli-wpfoundry
 ================
 
 
 
-[![Build Status](https://travis-ci.org/mikeybeck/zoodle.svg?branch=master)](https://travis-ci.org/mikeybeck/zoodle)
+[![Build Status](https://travis-ci.org/mikeybeck/wpcli-wpfoundry.svg?branch=master)](https://travis-ci.org/mikeybeck/wpcli-wpfoundry)
 
 Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contributing) | [Support](#support)
 
@@ -26,13 +26,13 @@ Installing this package requires WP-CLI v2.5 or greater. Update to the latest st
 Once you've done so, you can install the latest stable version of this package with:
 
 ```bash
-wp package install mikeybeck/zoodle:@stable
+wp package install mikeybeck/wpcli-wpfoundry:@stable
 ```
 
 To install the latest development version of this package, use the following command instead:
 
 ```bash
-wp package install mikeybeck/zoodle:dev-master
+wp package install mikeybeck/wpcli-wpfoundry:dev-master
 ```
 
 ## Contributing
@@ -47,13 +47,13 @@ For a more thorough introduction, [check out WP-CLI's guide to contributing](htt
 
 Think you’ve found a bug? We’d love for you to help us get it fixed.
 
-Before you create a new issue, you should [search existing issues](https://github.com/mikeybeck/zoodle/issues?q=label%3Abug%20) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version.
+Before you create a new issue, you should [search existing issues](https://github.com/mikeybeck/wpcli-wpfoundry/issues?q=label%3Abug%20) to see if there’s an existing resolution to it, or if it’s already been fixed in a newer version.
 
-Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/mikeybeck/zoodle/issues/new). Include as much detail as you can, and clear steps to reproduce if possible. For more guidance, [review our bug report documentation](https://make.wordpress.org/cli/handbook/bug-reports/).
+Once you’ve done a bit of searching and discovered there isn’t an open or fixed issue for your bug, please [create a new issue](https://github.com/mikeybeck/wpcli-wpfoundry/issues/new). Include as much detail as you can, and clear steps to reproduce if possible. For more guidance, [review our bug report documentation](https://make.wordpress.org/cli/handbook/bug-reports/).
 
 ### Creating a pull request
 
-Want to contribute a new feature? Please first [open a new issue](https://github.com/mikeybeck/zoodle/issues/new) to discuss whether the feature is a good fit for the project.
+Want to contribute a new feature? Please first [open a new issue](https://github.com/mikeybeck/wpcli-wpfoundry/issues/new) to discuss whether the feature is a good fit for the project.
 
 Once you've decided to commit the time to seeing your pull request through, [please follow our guidelines for creating a pull request](https://make.wordpress.org/cli/handbook/pull-requests/) to make sure it's a pleasant experience. See "[Setting up](https://make.wordpress.org/cli/handbook/pull-requests/#setting-up)" for details specific to working on this package locally.
 

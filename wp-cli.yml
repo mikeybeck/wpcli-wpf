@@ -1,4 +1,3 @@
 require:
-  - hello-world-command.php
-  - zoodle-commands.php
-  - test-commands.php
+  - wpcli-wpfoundry-commands.php
+#  - test-commands.php
