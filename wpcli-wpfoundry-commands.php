@@ -23,4 +23,4 @@ if ( ! file_exists( _wpfoundry_get_wpfoundry_dir() ) ) {
     }
 }
 
-WP_CLI::add_command( 'wpfoundry', wpfoundryCommands::class );
+WP_CLI::add_command( 'wpfoundry', WPFoundryCommands::class );
